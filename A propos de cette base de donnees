@@ -1,0 +1,19 @@
+Cette base de données est une copie de la base "offshore leaks", publiée par l'ICIJ, téléchargée sous forme de fichiers CSV en mai 2017 à partir de cette page : https://offshoreleaks.icij.org/pages/database
+
+Voici le message d'avertissement publié par l'ICIJ à propos de ces données :
+"There are legitimate uses for offshore companies and trusts. We do not intend to suggest or imply that any persons, companies or other entities included in the ICIJ Offshore Leaks Database have broken the law or otherwise acted improperly. Many people and entities have the same or similar names. We suggest you confirm the identities of any individuals or entities located in the database based on addresses or other identifiable information. If you find an error in the database please get in touch with us."
+
+Cette base a été reformatée sous forme de base de données relationnelle pour des raisons pédagogiques, et quelques modifications y ont été apportées afin de simplifier son utilisation :
+- Les données d'origines se composent de 5 fichiers CSV : Entities, all_edges, Addresses, Officers, Intermediaries
+- Chacun de ces fichiers a été importé dans une table relationnelle du même nom que le fichier.
+- Une colonne "url" a été ajoutée à chacune de ces tables, chaque objet ayant une page dédiée sur le site de l'ICIJ.
+- Certaines colonnes jugées comme inutiles aux fins pédagogiques ont été supprimées.
+- Les données dont la source n'était pas "Panama Papers" ont été supprimées.
+- Dans la table "entity", une colonne "lifetime" a été ajoutée. Elle contient la durée de vie d'une société donnée. Elle est calculée à partir des colonnes "incorporation_date", "inactivation_date" and "struck_off_date" selon la méthodologie expliquée ici : https://www.icij.org/investigations/panama-papers/explore-panama-papers-key-figures/ (section "Data Mathodology)
+- Les doublons ont été retirés de la table "all_edges" de manière à pouvoir appliquer une contrainte d'unicité sur ces colonnes :  ["node_1","assoc_type","node_2","source"]. Quand des dates différentes étaient présentes dans les colonnes start_date ou end_date, la date la plus ancienne a été gardée.
+- La table "all_edges" a été séparée en plusieurs tables, selon les valeurs présentes dans les colonnes "node_1" et "node_2". Ces tables commencent toutes par "assoc_"
+- Dans la table "assoc_interm_entities", les colonnes "start_date" et "end_date" ont été supprimées car elles contenaient trop peu d'informations.
+- Certaines tables ont été ajoutées : "status", "country", "address". "Address" et "country" contiennent des données provenant des tables "entity" et "intermediary" et ont été formées pour éviter la redondance des données selon la théorie de la normalisation relationnelle (afin d'avoir une base tendant au maximum vers la 3NF). La table "status" a été obtenue par le même procédé, à partir des données de la table "intermediaries".
+- Des données factices ont été ajoutées à des fins pédagogiques. Dans chaque table, une colonne "source" (clé étrangère référençant la table "source") indique si les données proviennent des Panama Papers ou si elles sont factices.
+- Dans la table "officer", la colonne "name" a été tronquée à 70 caractères. Dans la table "addresses", la colonne "addresse" a été tronquée à 100 caractères.
+

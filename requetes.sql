@@ -1,1 +1,1 @@
-SELECT id, code || ' - ' || country AS code_et_nom FROM country ;
+SELECT * FROM address WHERE countries = 'JEY' OR countries = 'PAN';

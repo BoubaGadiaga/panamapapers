@@ -1,1 +1,1 @@
-SELECT code, country FROM country ;
+SELECT id, code || ' - ' || country AS code_et_nom FROM country ;

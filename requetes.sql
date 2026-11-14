@@ -1,1 +1,1 @@
-SELECT * FROM address WHERE countries = 'JEY' OR countries = 'PAN';
+SELECT * FROM address WHERE countries In ( 'JEY' , 'PAN');

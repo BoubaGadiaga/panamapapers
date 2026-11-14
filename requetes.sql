@@ -1,1 +1,1 @@
-SELECT * FROM officer, country;
+SELECT COUNT(*) FROM (SELECT * FROM officer, country);

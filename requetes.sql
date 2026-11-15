@@ -1,10 +1,7 @@
 SELECT *
-  FROM (
-           SELECT *
-             FROM officer o
-                  JOIN
-                  assoc_officer_entity a ON o.id = a.officer
-       ) join1
-       JOIN
-       entity e ON e.id = join1.entity
- WHERE e.name = "Big Data Crunchers Ltd.";
+  FROM officer o,
+       assoc_officer_entity a,
+       entity e
+ WHERE ( (o.id == a.officer) AND
+         (a.entity == e.id) ) AND
+       e.name = "Big Data Crunchers Ltd.";
